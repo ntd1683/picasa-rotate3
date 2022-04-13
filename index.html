@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picasa</title>
+</head>
+
+<body>
+    <form onsubmit="return false" onkeydown="return event.key != 'Enter';">
+        <label for="">Category</label><br>
+        JPG<input type="radio" id="category" value="JPG" style="margin-right: 30px;" name="category">
+        NEF<input type="radio" id="category" value="NEF" name="category">
+        <br>
+        <label for="">Start</label><br>
+        <input type="number" id="start"><br>
+        <label for="">End</label><br>
+        <input type="number" id="end"><br>
+        <label for="">Except</label><br>
+        <input type="number" id="except">
+        <br>
+        <button onclick="start_print()">Bắt đầu</button>
+        <button onclick="coppy()">Coppy</button>
+    </form>
+    <div id="result"></div>
+</body>
+<script>
+    let result = document.getElementById("result");
+    let test = document.createElement("br");
+    document.getElementById("except").onkeydown = function (a) {
+        if (a.keyCode == 13) {
+            function_except();
+        }
+    };
+    let arrExcept = [];
+    function function_except() {
+        let except = document.getElementById("except").value;
+        arrExcept.push(except);
+        document.getElementById("except").value = '';
+        console.log(arrExcept);
+    }
+    function start_print() {
+        result.innerHTML = '';
+        let start = document.getElementById("start").value;
+        let end = document.getElementById("end").value;
+        let categorys = document.getElementsByName("category");
+        category = Array.from(categorys).find(category => category.checked);
+        console.log(category.value);
+        for (let i = start; i <= end; i++) {
+            let check = 0;
+            arrExcept.forEach((element) => {
+                console.log("1");
+                if (i == element) {
+                    check++;
+                }
+            });
+            if (check == 0) {
+                result.innerHTML += "[DSC_" + parseInt(i) + "." + category.value + "],";
+                result.appendChild(test);
+                result.innerHTML += "rotate=rotate(3),";
+                result.appendChild(test);
+            }
+        }
+    }
+    function coppy() {
+        var Text = result.textContent;
+        let arrText = Text.split(",");
+        let copyText = arrText.join(" ");
+        copyText = copyText.replace(/\s/g, "\n");
+        console.log(copyText);
+        navigator.clipboard.writeText(copyText);
+    }
+</script>
+
+</html>
