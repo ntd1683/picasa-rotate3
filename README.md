@@ -1,0 +1,1 @@
+# picasa-rotate3
