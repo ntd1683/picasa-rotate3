@@ -11,7 +11,7 @@
 <body>
     <form onsubmit="return false" onkeydown="return event.key != 'Enter';">
         <label for="">Category</label><br>
-        JPG<input type="radio" id="category" value="JPG" style="margin-right: 30px;" name="category">
+        JPG<input type="radio" id="category" value="JPG" style="margin-right: 30px;" name="category" checked>
         NEF<input type="radio" id="category" value="NEF" name="category">
         <br>
         <label for="">Start</label><br>
@@ -57,7 +57,12 @@
                 }
             });
             if (check == 0) {
-                result.innerHTML += "[DSC_" + parseInt(i) + "." + category.value + "],";
+                if(start < 1000){
+                    result.innerHTML += "[DSC_" + "0"+ parseInt(i) + "." + category.value + "],";
+                }
+                else{
+                    result.innerHTML += "[DSC_" + parseInt(i) + "." + category.value + "],";
+                }
                 result.appendChild(test);
                 result.innerHTML += "rotate=rotate(3),";
                 result.appendChild(test);
